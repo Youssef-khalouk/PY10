@@ -27,18 +27,11 @@ def enchantment_factory(enchantment_type: str) -> callable:
     return func
 
 
-a = 100
-
 def memory_vault() -> dict[str, callable]:
     content = {}
 
-
     def store(key, value) -> None:
         nonlocal content
-        global a
-
-        print
-
         content[key] = value
 
     def recall(key) -> any:
@@ -50,14 +43,32 @@ def memory_vault() -> dict[str, callable]:
 
 def main():
     print("Testing mage counter...")
+    counter = mage_counter()
+    print(f"Call 1: {counter()}")
+    print(f"Call 2: {counter()}")
+    print(f"Call 3: {counter()}")
 
-    var = memory_vault()
+    print("\nTesting spell accumulator...")
+    accumulator = spell_accumulator(10)
+    print(f"Add 5: {accumulator(5)}")
+    print(f"Add 10: {accumulator(10)}")
+    print(f"Add -3: {accumulator(-3)}")
 
-    var["store"]("name", "youssef")
-    print(var["recall"]("name"))
-    print(var["recall"]("age"))
+    print("\nTesting enchantment factory...")
+    flaming = enchantment_factory("Flaming")
+    frozen = enchantment_factory("Frozen")
+    print(flaming("Sword"))
+    print(frozen("Shield"))
 
-    print(variable)
+    print("\nTesting memory vault...")
+    vault = memory_vault()
+    vault["store"]("spell", "Fireball")
+    vault["store"]("level", 5)
+
+    print("Recall spell:", vault["recall"]("spell"))
+    print("Recall level:", vault["recall"]("level"))
+    print("Recall missing:", vault["recall"]("unknown"))
+
 
 if __name__ == "__main__":
     main()
