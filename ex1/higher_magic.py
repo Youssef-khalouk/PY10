@@ -1,6 +1,7 @@
 
 def spell_combiner(spell1: callable, spell2: callable) -> callable:
-    return lambda *args, **kwargs: (spell1(*args, **kwargs), spell2(*args, **kwargs))
+    return lambda *args, **kwargs: (
+        spell1(*args, **kwargs), spell2(*args, **kwargs))
 
 
 def power_amplifier(base_spell: callable, multiplier: int) -> callable:
@@ -8,11 +9,14 @@ def power_amplifier(base_spell: callable, multiplier: int) -> callable:
 
 
 def conditional_caster(condition: callable, spell: callable) -> callable:
-    return lambda *args, **kwargs: (spell(*args, **kwargs) if condition(*args, **kwargs) else "Spell fizzled")
+    var = "Spell fizzled "
+    return lambda *args, **kwargs: (
+        spell(*args, **kwargs) if condition(*args, **kwargs) else var)
 
 
 def spell_sequence(spells: list[callable]) -> callable:
-    return lambda *args, **kwargs: ([spell(*args, **kwargs) for spell in spells])
+    return lambda *args, **kwargs: (
+        [spell(*args, **kwargs) for spell in spells])
 
 
 def main():
@@ -50,12 +54,11 @@ def main():
     print("Spell Sequence:", sequence(3))
 
     ultimate_combo = spell_sequence([
-        power_amplifier(conditional_caster(has_mana, fireball), 2),
-        power_amplifier(conditional_caster(is_daytime, ice_spike), 3),
-        heal
-    ])
+        power_amplifier(conditional_caster(has_mana, fireball), 1),
+        power_amplifier(conditional_caster(is_daytime, ice_spike), 2),
+        heal])
 
-    print("Ultimate Combo (mana=5):", ultimate_combo(5))
+    print("Ultimate Combo (mana=5):", ultimate_combo(9))
 
     print("Ultimate Combo (mana=12):", ultimate_combo(12))
 

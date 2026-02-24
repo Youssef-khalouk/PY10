@@ -31,11 +31,9 @@ def memory_vault() -> dict[str, callable]:
     content = {}
 
     def store(key, value) -> None:
-        nonlocal content
         content[key] = value
 
     def recall(key) -> any:
-        nonlocal content
         return content.get(key, "Memory not found")
 
     return {"store": store, "recall": recall}

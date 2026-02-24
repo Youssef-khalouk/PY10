@@ -22,7 +22,7 @@ def mage_stats(mages: list[dict]) -> dict:
 
 def main():
 
-    print("Testing artifact sorter...\n")
+    print("\nTesting artifact sorter...")
     artifacts = [
         {'name': 'Earth Shield', 'power': 104, 'type': 'focus'},
         {'name': 'Wind Cloak', 'power': 67, 'type': 'accessory'},
@@ -31,17 +31,24 @@ def main():
     ]
     arts = artifact_sorter(artifacts)
     for art in arts:
-        print(f"name: {art["name"]}, power = {art["power"]}, type: {art["type"]}")
+        print(f"name: {art["name"]}, power = {art["power"]}", end="")
+        print(f", type: {art["type"]}")
 
-    print("\nTesting spell transformer...\n")
+    print("\nTesting power filter...")
+
+    Lightning = power_filter(artifacts, 100)
+    for i in Lightning:
+        print(f"name: {i["name"]}, power = {i["power"]}", end="")
+        print(f", type: {i["type"]}")
+
+    print("\nTesting spell transformer...")
 
     spells = ['tornado', 'meteor', 'heal', 'shield']
     spl = spell_transformer(spells)
     for s in spl:
         print(s, end=" ")
 
-        
-    print("\n\nTesting mage status...\n")
+    print("\n\nTesting mage status...")
     mages = [
         {'name': 'Luna', 'power': 97, 'element': 'earth'},
         {'name': 'Riley', 'power': 77, 'element': 'ice'},
@@ -52,7 +59,8 @@ def main():
 
     art = mage_stats(mages)
 
-    print(f"max_power={art["max_power"]}, min_power={art["min_power"]}, avg_power={art["avg_power"]}")
+    print(f"max_power={art["max_power"]}, min_power=", end="")
+    print(f"{art["min_power"]}, avg_power={art["avg_power"]}")
 
 
 if __name__ == "__main__":
