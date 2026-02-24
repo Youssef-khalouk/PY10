@@ -1,7 +1,7 @@
 
 def spell_combiner(spell1: callable, spell2: callable) -> callable:
-    return lambda *args, **kwargs: (
-        spell1(*args, **kwargs), spell2(*args, **kwargs))
+    return lambda *args, **kwargs: [
+        spell1(*args, **kwargs), spell2(*args, **kwargs)]
 
 
 def power_amplifier(base_spell: callable, multiplier: int) -> callable:
@@ -15,8 +15,7 @@ def conditional_caster(condition: callable, spell: callable) -> callable:
 
 
 def spell_sequence(spells: list[callable]) -> callable:
-    return lambda *args, **kwargs: (
-        [spell(*args, **kwargs) for spell in spells])
+    return lambda *args, **kwargs: (spell(*args, **kwargs) for spell in spells)
 
 
 def main():
